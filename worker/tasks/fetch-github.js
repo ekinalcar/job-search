@@ -1,7 +1,7 @@
 const axios = require("axios");
 
-var redis = require("redis"),
-  client = redis.createClient();
+const redis = require("redis");
+const client = redis.createClient();
 
 const { promisify } = require("util");
 const setAsync = promisify(client.set).bind(client);
@@ -20,11 +20,26 @@ const fetchGithub = async () => {
     console.log(`got ${resultCount} jobs`);
     page++;
   }
-  console.log(`got ${allJobs.length} jobs`);
+
+  console.log("got", allJobs.length, "jobs total");
+
+  // filter jrJobs
+  const jrJobs = allJobs.filter(job => {
+    const jobTitle = job.title.toLowerCase();
+    if (
+      jobTitle.includes("senior") ||
+      jobTitle.includes("manager") ||
+      jobTitle.includes("sr.") ||
+      jobTitle.includes("architect")
+    ) {
+      return false;
+    }
+    return true;
+  });
+  console.log("filtered down to", jrJobs.length);
   // set in redis
-  const success = await setAsync("github", JSON.stringify(allJobs));
+  const success = await setAsync("github", JSON.stringify(jrJobs));
   console.log({ success });
 };
 
-fetchGithub();
 module.exports = fetchGithub;
