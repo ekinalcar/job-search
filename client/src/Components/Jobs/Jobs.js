@@ -54,11 +54,9 @@ const Jobs = ({ jobs }) => {
   };
 
   return (
-    <div className="jobs">
+    <div className="jobs welcome-item">
       <JobModal open={open} job={selectedJob} handleClose={handleClose} />
-      <Typography variant="h4" component="h1">
-        Entry Level Software Jobs
-      </Typography>
+
       <Typography variant="h6" component="h2">
         Found {numJobs} Jobs
       </Typography>

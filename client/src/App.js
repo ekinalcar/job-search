@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Typography from "@material-ui/core/Typography";
+
+import logo from "./assets/images/sitting.svg";
 
 import Jobs from "./Components/Jobs/Jobs";
 
@@ -26,7 +29,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Jobs jobs={this.state.jobs} />
+        <div className="layout">
+          <div className="left">
+            <Typography variant="h4" component="h1">
+              Entry Level Software Jobs
+            </Typography>
+            <Jobs jobs={this.state.jobs} />
+          </div>
+          <div className="right">
+            <img alt="Sitting" src={logo} />
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,5 +1,32 @@
-body {
-  margin: 20px 40px;
+body,
+html {
+  padding: 0;
+  margin: 0;
+  color: #f1f1f1;
+  font-family: "Roboto", sans-serif;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.layout .left {
+  width: 80%;
+  padding: 40px;
+  background-color: rgb(56, 62, 63);
+}
+.layout .right {
+  width: 20%;
+  background-color: rgb(77, 162, 183);
+  min-height: 100%;
+  position: relative;
+}
+
+.layout .right img {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
 }
 
 .job {
