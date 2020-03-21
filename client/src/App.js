@@ -1,21 +1,32 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import Jobs from "./Components/Jobs/Jobs";
 
 import "./App.css";
 
-const mockJobs = [
-  { title: "title 1", company: "company 1" },
-  { title: "title 1", company: "company 1" },
-  { title: "title 1", company: "company 1" },
-  { title: "title 1", company: "company 1" }
-];
-
 class App extends Component {
+  state = { jobs: [] };
+
+  fetchJobs = async () => {
+    try {
+      const jobs = await axios.get("http://localhost:3001/jobs");
+      if (jobs.data) {
+        this.setState({ jobs: jobs.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  componentDidMount() {
+    this.fetchJobs();
+  }
+
   render() {
     return (
       <div className="App">
-        <Jobs jobs={mockJobs} />
+        <Jobs jobs={this.state.jobs} />
       </div>
     );
   }
