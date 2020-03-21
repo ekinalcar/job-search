@@ -1,5 +1,11 @@
 const axios = require("axios");
 
+var redis = require("redis"),
+  client = redis.createClient();
+
+const { promisify } = require("util");
+const setAsync = promisify(client.set).bind(client);
+
 const baseUrl = "https://jobs.github.com/positions.json";
 
 const fetchGithub = async () => {
@@ -15,6 +21,10 @@ const fetchGithub = async () => {
     page++;
   }
   console.log(`got ${allJobs.length} jobs`);
+  // set in redis
+  const success = await setAsync("github", JSON.stringify(allJobs));
+  console.log({ success });
 };
 
+fetchGithub();
 module.exports = fetchGithub;
